@@ -46,4 +46,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //Handle function Min Education = SD
+    public function isLastEducationMaxSD(): bool
+    {
+        $lastEducation = $this->last_education;
+
+        if (!$lastEducation) {
+            return false;
+        }
+
+        $educationLevels = ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'];
+
+        $lastEducationIndex = array_search($lastEducation, $educationLevels);
+        return $lastEducationIndex !== false && $lastEducationIndex <= array_search('SD', $educationLevels);
+    }
 }

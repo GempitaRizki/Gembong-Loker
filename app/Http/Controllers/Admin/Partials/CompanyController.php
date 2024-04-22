@@ -32,11 +32,11 @@ class CompanyController extends Controller
         ]);
 
         if ($request->hasFile('images')) {
-            $imageName = $request->file('images')->getClientOriginalName(); 
-            $imageHash = hash('sha256', Str::random(40)); 
-            $imagePath = $imageName . '_' . $imageHash; 
-            $imagePath = $request->file('images')->storeAs('company_images', $imagePath, 'public'); 
-            $validatedCompany['images'] = $imagePath; 
+            $imageName = $request->file('images')->getClientOriginalName();
+            $imageHash = hash('sha256', Str::random(40));
+            $imagePath = $imageName . '_' . $imageHash;
+            $imagePath = $request->file('images')->storeAs('company_images', $imagePath, 'public');
+            $validatedCompany['images'] = $imagePath;
         }
 
 
@@ -46,7 +46,30 @@ class CompanyController extends Controller
 
     public function edit($id)
     {
+        $company = Company::findOrFail($id);
+        return view('admin.layouts.company.edit', compact('company'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $company = Company::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'detail_address' => 'required',
+        ]);
+
+        $company->update($validatedData);
+
+        return redirect()->route('company.index')->with('success', 'Company has been updated successfully');
+    }
+
+    public function destroy($id)
+    {
         $companys = Company::findOrFail($id);
-        return view('admin.layouts.company.edit', compact('companys'));
+        $companys->delete();
+
+        return redirect()->route('company.index');
     }
 }

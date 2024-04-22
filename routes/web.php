@@ -36,19 +36,22 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/admin/lowongan/{id}/edit', [LowonganKerjaController::class, 'edit'])->name('loker.edit');
     Route::put('/admin/lowongan/{id}', [LowonganKerjaController::class, 'update'])->name('loker.update');
-    Route::delete('/admin//lowongan/{id}', [LowonganKerjaController::class, 'destroy'])->name('loker.destroy');
+    Route::delete('/admin/lowongan/{id}', [LowonganKerjaController::class, 'destroy'])->name('loker.destroy');
 
     //company
     Route::get('/admin/company', [CompanyController::class, 'index'])->name('company.index');
     Route::get('/admin/company/add-data', [CompanyController::class, 'addIndex'])->name('company.addData');
     Route::post('/admin/company/add-data', [CompanyController::class, 'addData'])->name('add-data-company');
+    Route::get('/admin/company/{id}/edit', [CompanyController::class, 'edit'])->name('company.edit');
+    Route::put('/admin/company/{id}', [CompanyController::class, 'update'])->name('company.update');
+    Route::delete('/admin/company/{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
 
 
     //user
     Route::get('/admin/users', [UsersController::class, 'index'])->name('user.index');
     Route::get('/admin/user/{id}/edit', [UsersController::class, 'edit'])->name('user.edit');
-    Route::put('/admin//user/{id}', [UsersController::class, 'update'])->name('user.update');
-    Route::delete('/admin//user/{id}', [UsersController::class, 'destroy'])->name('user.destroy');
+    Route::put('/admin/user/{id}', [UsersController::class, 'update'])->name('user.update');
+    Route::delete('/admin/user/{id}', [UsersController::class, 'destroy'])->name('user.destroy');
 });
 
 
